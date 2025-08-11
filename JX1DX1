@@ -10,6 +10,33 @@ end
 if not isfile("Forsakation/Killers/JX1DX1.rbxmx") then
 	writefile("Forsakation/Killers/JX1DX1.rbxmx", game:HttpGet("https://raw.githubusercontent.com/CyberNinja103/Animations/refs/heads/main/JX1DX1.rbxmx"))
 end
+-- SOUNDS
+writefile("Forsakation/Killers/JX1DASHHIT.mp3", game:HttpGet("https://github.com/Nothingusefull/DonatorVersion/raw/refs/heads/main/JX1DX1Sounds/JX1DASHHIT.mp3"))
+writefile("Forsakation/Killers/JX1DASHSTART.mp3", game:HttpGet("https://github.com/Nothingusefull/DonatorVersion/raw/refs/heads/main/JX1DX1Sounds/JX1DASHSTART.mp3"))
+writefile("Forsakation/Killers/JX1DX1_Laugh.mp3", game:HttpGet("https://github.com/Nothingusefull/DonatorVersion/raw/refs/heads/main/JX1DX1Sounds/JX1DX1_Laugh.mp3"))
+writefile("Forsakation/Killers/JX1SWING.mp3", game:HttpGet("https://github.com/Nothingusefull/DonatorVersion/raw/refs/heads/main/JX1DX1Sounds/JX1SWING.mp3"))
+writefile("Forsakation/Killers/JX1WALLSMACK.mp3", game:HttpGet("https://github.com/Nothingusefull/DonatorVersion/raw/refs/heads/main/JX1DX1Sounds/JX1WALLSMACK.mp3"))
+writefile("Forsakation/Killers/heart.mp3", game:HttpGet("https://github.com/Nothingusefull/DonatorVersion/raw/refs/heads/main/JX1DX1Sounds/heart.mp3"))
+writefile("Forsakation/Killers/jx1dash.mp3", game:HttpGet("https://github.com/Nothingusefull/DonatorVersion/raw/refs/heads/main/JX1DX1Sounds/jx1dash.mp3"))
+writefile("Forsakation/Killers/jx1hitswing.mp3", game:HttpGet("https://github.com/Nothingusefull/DonatorVersion/raw/refs/heads/main/JX1DX1Sounds/jx1hitswing.mp3"))
+writefile("Forsakation/Killers/jx1Chase.mp3", game:HttpGet("https://github.com/Nothingusefull/DonatorVersion/raw/refs/heads/main/JX1DX1Sounds/jx1Chase.mp3"))
+local DashSFXHit = getcustomasset("Forsakation/Killers/JX1DASHHIT.mp3")
+local DashSFXStart = getcustomasset("Forsakation/Killers/JX1DASHSTART.mp3")
+local Laugh = getcustomasset("Forsakation/Killers/JX1DX1_Laugh.mp3")
+local swing = getcustomasset("Forsakation/Killers/JX1SWING.mp3")
+local wallsmack = getcustomasset("Forsakation/Killers/JX1WALLSMACK.mp3")
+local heart = getcustomasset("Forsakation/Killers/heart.mp3")
+local dashSFXloop = getcustomasset("Forsakation/Killers/jx1dash.mp3")
+local hitswing = getcustomasset("Forsakation/Killers/jx1hitswing.mp3")
+local chase = getcustomasset("Forsakation/Killers/jx1Chase.mp3")
+local Chasemusic = Instance.new("Sound")
+Chasemusic.SoundId = chase
+Chasemusic.Parent = workspace
+Chasemusic.Volume = 1
+Chasemusic.Looped = true
+Chasemusic:Play()
+
+
 local EmoteGui: ScreenGui = game:GetObjects("rbxassetid://70965231817963")[1]
 EmoteGui.Parent = game.Players.LocalPlayer.PlayerGui
 EmoteGui.Enabled = false
@@ -1189,6 +1216,11 @@ local function onButton1Down()
 		Anim2:Play()
 		Anim:Stop()
 		id = M1Left
+		local audio = Instance.new("Sound")
+		audio.SoundId = swing
+		audio.Volume = 1
+		audio.Parent = workspace
+		audio:Play()
 		wait(.2)
 		attackvel.Enabled = true
 		wait(0.1)
@@ -1196,6 +1228,8 @@ local function onButton1Down()
 		wait(.3)
 		Anim2:Destroy()
 		mouse1 = false
+		wait(1)
+		audio:Destroy()
 	elseif  id ~= M1Right and ability == false and mouse1 == false and LMB == true then 
 		mouse1 = true
 		LMB = false
@@ -1204,6 +1238,11 @@ local function onButton1Down()
 		Anim2:Play()
 		Anim:Stop()
 		id = M1Right
+		local audio = Instance.new("Sound")
+		audio.SoundId = swing
+		audio.Volume = 1
+		audio.Parent = workspace
+		audio:Play()
 		wait(.2)
 		attackvel.Enabled = true
 		wait(0.1)
@@ -1211,6 +1250,8 @@ local function onButton1Down()
 		wait(.3)
 		Anim2:Destroy()
 		mouse1 = false
+		wait(1)
+		audio:Destroy()
 	end
 end
 
@@ -1218,6 +1259,11 @@ mouse.Button1Down:Connect(onButton1Down)
 
 uis.InputBegan:Connect(function(input)
 	if input.KeyCode == Enum.KeyCode.E and ability == false then
+		local audio = Instance.new("Sound")
+		audio.SoundId = Laugh
+		audio.Parent = workspace
+		audio.Volume = 5
+		audio:Play()
 		ability = true
 		hum.WalkSpeed = 0.1
 		local targetPosition = mouse.Hit.p
@@ -1229,6 +1275,8 @@ uis.InputBegan:Connect(function(input)
 		id = teleport
 		ability = false
 		hum.WalkSpeed = ws
+		wait(1)
+		audio:Destroy()
 	end
 end)
 
@@ -1239,10 +1287,17 @@ uis.InputBegan:Connect(function(input)
 		Anim:Stop()
 		Anim = AnimHandler.new(char, poisonedheart)
 		Anim:Play()
+		local audio = Instance.new("Sound")
+		audio.SoundId = heart
+		audio.Parent = workspace
+		audio.Volume = 1
+		audio:Play()
 		wait(1.4)
 		hum.WalkSpeed = ws
 		ability = false
 		id = poisonedheart
+		wait(1)
+		audio:Destroy()
 	end
 end)
 uis.InputBegan:Connect(function(input)
@@ -1254,17 +1309,26 @@ uis.InputBegan:Connect(function(input)
 		Anim:Stop()
 		Anim = AnimHandler.new(char, DashStart)
 		Anim:Play()
+		local audio = Instance.new("Sound")
+		audio.SoundId = DashSFXStart
+		audio.Volume = 1
+		audio.Parent = workspace
+		audio:Play()
 		wait(0.25)
 		dash = true
 		Anim:Stop()
 		Anim = AnimHandler.new(char, Dashing)
 		Anim.Looped = true
 		Anim:Play()
+		audio.SoundId = dashSFXloop
+		audio.Looped = true
+		audio.Name = "DashSFX"
+		audio:Play()
 		local c = Instance.new("BodyVelocity")
 		c.MaxForce = Vector3.new(1,0,1) * 30000
 		c.Parent = char.HumanoidRootPart
 		c.Name = "DashVelocity"
-		local counter = 10 * 1 -- the amount of seconds
+		local counter = 10 * .3 -- the amount of seconds
 		for i = counter, 0, -1 do
 			if dash == true then
 				task.wait(.1)
@@ -1272,8 +1336,11 @@ uis.InputBegan:Connect(function(input)
 			else return
 			end
 		end
+		wait(.7)
 		if dash == true then
+			
 			wait(2)
+			audio:Destroy()
 			c:Destroy()
 			ability = false
 			id = Dashing
@@ -1288,11 +1355,19 @@ function onTouched(hit)
 		if not hit or not hit.Parent then return end
 		local human = hit.Parent:findFirstChild("Humanoid")
 		if human and human:IsA("Humanoid") then
+			if workspace.DashSFX then
+				workspace.DashSFX:Destroy()
+			end
 			dash = false
 			char.HumanoidRootPart.DashVelocity:Destroy()
 			Anim:Stop()
 			Anim = AnimHandler.new(char, DashHit)
 			Anim:Play() 
+			local audio = Instance.new("Sound")
+			audio.SoundId = DashSFXHit
+			audio.Volume = 1
+			audio.Parent = workspace
+			audio:Play()
 			wait(0.8)
 			hum.JumpPower = 50
 			ability = false
@@ -1301,13 +1376,20 @@ function onTouched(hit)
 			wait(2)
 			debounce = false
 		elseif hit:IsA("Part") and hit.CanCollide == true then
-			
+			if workspace.DashSFX then
+				workspace.DashSFX:Destroy()
+			end
 			char.HumanoidRootPart.CanCollide = true
 			dash = false
 			char.HumanoidRootPart.DashVelocity:Destroy()
 			Anim:Stop()
 			Anim = AnimHandler.new(char, DashWall)
 			Anim:Play() 
+			local audio = Instance.new("Sound")
+			audio.SoundId = wallsmack
+			audio.Volume = 1
+			audio.Parent = workspace
+			audio:Play()
 			wait(1)
 			hum.JumpPower = 50
 			char.HumanoidRootPart.CanCollide = false
@@ -1320,15 +1402,15 @@ function onTouched(hit)
 	end
 end
 char.Torso.Touched:connect(onTouched)
-uis.InputBegan:Connect(function(input)
-	if input.KeyCode == Enum.KeyCode.G then
-		if EmoteGui.Enabled == false then
-			EmoteGui.Enabled = true
-		elseif EmoteGui.Enabled == true then
-			EmoteGui.Enabled = false
-		end
-	end
-end)
+--uis.InputBegan:Connect(function(input)
+--	if input.KeyCode == Enum.KeyCode.G then
+--		if EmoteGui.Enabled == false then
+--			EmoteGui.Enabled = true
+--		elseif EmoteGui.Enabled == true then
+--			EmoteGui.Enabled = false
+--		end
+--	end
+--end)
 
 -- Hi there this is the emote thing i made
 
@@ -1830,6 +1912,10 @@ end)
 
 while wait() do
 	if Destroyed == true then
+		if workspace.DashSFX then
+			workspace.DashSFX:Destroy()
+		end
+		Chasemusic:Destroy()
 		break
 	end;
 
