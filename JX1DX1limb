@@ -13,9 +13,9 @@ end
 if not isfile("Forsakation/Killers/JX1DX1.rbxmx") then
 	writefile("Forsakation/Killers/JX1DX1.rbxmx", game:HttpGet("https://raw.githubusercontent.com/CyberNinja103/Animations/refs/heads/main/JX1DX1.rbxmx"))
 end
---if not isfile("Forsakation/GUI/JX1hud.rbxmx") then
+if not isfile("Forsakation/GUI/JX1hud.rbxmx") then
 	writefile("Forsakation/GUI/JX1hud.rbxmx", game:HttpGet("https://github.com/Nothingusefull/DonatorVersion/raw/refs/heads/main/JX1gui.rbxmx"))
---end
+end
 -- SOUNDS
 writefile("Forsakation/Killers/JX1DASHHIT.mp3", game:HttpGet("https://github.com/Nothingusefull/DonatorVersion/raw/refs/heads/main/JX1DX1Sounds/JX1DASHHIT.mp3"))
 writefile("Forsakation/Killers/JX1DASHSTART.mp3", game:HttpGet("https://github.com/Nothingusefull/DonatorVersion/raw/refs/heads/main/JX1DX1Sounds/JX1DASHSTART.mp3"))
@@ -42,7 +42,9 @@ Chasemusic.Volume = 1
 Chasemusic.Looped = true
 Chasemusic:Play()
 
-
+local PWNhud = game:GetObjects(getcustomasset("Forsakation/GUI/JX1hud.rbxmx"))[1]
+PWNhud.Slots.Parent = game.Players.LocalPlayer.PlayerGui
+PWNhud.M1_MOBILE.Parent = game.Players.LocalPlayer.PlayerGui
 local EmoteGui: ScreenGui = game:GetObjects("rbxassetid://70965231817963")[1]
 EmoteGui.Parent = game.Players.LocalPlayer.PlayerGui
 EmoteGui.Enabled = false
@@ -55,6 +57,37 @@ Controls.Parent = game.Players.LocalPlayer.PlayerGui
 Controls.Enabled = true
 Controls.MobileContainer.Visible = false
 Controls.Version.Text = "Pwned by: 14:00"
+
+
+--[[ read me NOW!!!
+
+this was leaked with permission from ShownApe aka the one who found the original limb reanimate (and also permission from kampachi who made the original code and gave me it, we love you kam)
+this is a variant of the original method which works the same way
+
+you might be wondering why it got leaked:
+when someone found this variant it got given to someone, then someone else, then someone else... and so on (including me)
+till it got in the hands of a skid (feariosz0) who thought it was a good idea to use it without permission in his hub to advertise it
+and get popular from it
+textbook definition of skid basically
+
+also a h1 report (aka a vulnerability report) was already filed and sent to roblox
+so this will get patched soon, have fun while you still can
+
+also please keep in mind that this code was written by me but its a remake of kampaachi's code just done and written way better (no shade)
+anything after this freshly added comment was made before and not after the leak,
+
+have fun skids, while you still can,,, :smiling_imp:
+
+]]
+
+-- written by Emper
+-- anyone who has the method can receive this code
+
+-- whoever originally wrote it was trying to optimize it
+-- so ill be doing that here
+-- although you dont really need to optimize stuff thats
+-- not done in loops
+-- but ill be doing it anyway since thats what they were trying to do
 
 do
 	-- Settings:
@@ -237,10 +270,7 @@ do
 	end))
 end
 
-
 local Animations = game:GetObjects(getcustomasset("Forsakation/Killers/JX1DX1.rbxmx"))[1]
-local PWNhud = game:GetObjects(getcustomasset("Forsakation/GUI/JX1hud.rbxmx"))[1]
-PWNhud.Parent = game.Players.LocalPlayer.PlayerGui
 local AnimHandler = loadstring(game:HttpGet("https://raw.githubusercontent.com/ProudNamed/SuperLightning/refs/heads/main/AnimModule/MainModule"))()
 local Anim
 local id
@@ -324,7 +354,7 @@ uis.InputEnded:Connect(function(input)
 end)
 
 local function onButton1Down()
-	if id ~= M1Left and uis.TouchEnabled == false and ability == false and mouse1 == false and LMB == false then 
+	if id ~= M1Left and uis.KeyboardEnabled == true and ability == false and mouse1 == false and LMB == false then 
 		mouse1 = true
 		LMB = true
 		local Anim2
@@ -346,7 +376,7 @@ local function onButton1Down()
 		mouse1 = false
 		wait(1)
 		audio:Destroy()
-	elseif  id ~= M1Right and uis.TouchEnabled == false and ability == false and mouse1 == false and LMB == true then 
+	elseif  id ~= M1Right and uis.KeyboardEnabled == true and ability == false and mouse1 == false and LMB == true then 
 		mouse1 = true
 		LMB = false
 		local Anim2
@@ -894,8 +924,8 @@ char.Torso.Touched:connect(onTouched)
 -- mobile Gui
 local Gui = game.Players.LocalPlayer.PlayerGui.ControlsUI
 local SprintButton = Gui.SprintingButton
-local Punch = game.Players.LocalPlayer.PlayerGui.JX1Hud.M1_MOBILE.PunchButton
-local Slots = game.Players.LocalPlayer.PlayerGui.JX1Hud.Slots
+local Punch = game.Players.LocalPlayer.PlayerGui.M1_MOBILE.PunchButton
+local Slots = game.Players.LocalPlayer.PlayerGui.Slots
 local hotbar = Slots.Hotbar.SlotsContainer
 local DashHUD = hotbar.Dash.SlotButton
 local PoisonedHUD = hotbar.PoisonedHeart.SlotButton
@@ -939,7 +969,7 @@ DashHUD.Activated:Connect(function()
 		Anim.Looped = true
 		Anim:Play()
 		audio.SoundId = dashSFXloop
-		audio.Looped = true
+		audio.Looped = false
 		audio.Name = "DashSFX"
 		audio:Play()
 		local c = Instance.new("BodyVelocity")
@@ -1163,9 +1193,11 @@ end)
 
 while wait() do
 	if Destroyed == true then
-		if workspace.DashSFX then
+		if workspace:FindFirstChild("DashSFX") then
 			workspace.DashSFX:Destroy()
 		end
+		Slots:Destroy()
+		Punch:Destroy()
 		Chasemusic:Destroy()
 		break
 	end;
