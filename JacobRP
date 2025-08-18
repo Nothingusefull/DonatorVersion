@@ -1260,29 +1260,30 @@ uis.InputBegan:Connect(function(input)
 end)
 
 uis.InputBegan:Connect(function(input)
-	if input.KeyCode == Enum.KeyCode.E and ability == false and GunHeld == false then
-		CanSprint = false
-		hum.WalkSpeed = 16
+	if input.KeyCode == Enum.KeyCode.E and ability == false and GunHeld == false and CanSprint == true then
 		sprinting = false
+		GunHeld = true
 		Anim2 = AnimHandler.new(char, GunEquip)
 		Anim2:Play()
 		Anim:Stop()
 		id = GunEquip
 		wait(0.8)
-		GunHeld = true
 		Anim2 = AnimHandler.new(char, GunIdle)
 		Anim2:Play()
 		Anim:Stop()
 		id = GunIdle
-	elseif input.KeyCode == Enum.KeyCode.E and ability == false and GunHeld == true and mouse1 == false then
-		GunHeld = false
-		CanSprint = true
+		CanSprint = false
+		hum.WalkSpeed = 16
+	elseif input.KeyCode == Enum.KeyCode.E and ability == false and GunHeld == true and mouse1 == false and CanSprint == false then
 		hum.WalkSpeed = ws
+		GunHeld = false
 		Anim2:Stop()
 		Anim2 = AnimHandler.new(char, GunUnequip)
 		Anim2:Play()
 		Anim:Stop()
 		id = GunUnequip
+		wait(.5)
+		CanSprint = true
 	end
 end)
 
@@ -1693,13 +1694,13 @@ SprintButton.Activated:Connect(function()
 	if sprinting1 == false then
 		sprinting1 = true
 		ws = 25
-		if ability == false then
+		if ability == false and CanSprint == true then
 			hum.WalkSpeed = 25
 		end		
-	elseif sprinting1 == true and CanSprint == true then
+	elseif sprinting1 == true then
 		sprinting1 = false
 		ws = 16
-		if ability == false and CanSprint == true then
+		if ability == false then
 			hum.WalkSpeed = 16
 		end
 	end
@@ -1725,11 +1726,9 @@ RollHUD.Activated:Connect(function()
 	end
 end)
 ShotgunHUD.Activated:Connect(function()
-	if ability == false and GunHeld == false then
-		GunHeld = true
-		CanSprint = false
-		hum.WalkSpeed = 16
+	if ability == false and GunHeld == false and CanSprint == true then
 		sprinting = false
+		GunHeld = true
 		Anim2 = AnimHandler.new(char, GunEquip)
 		Anim2:Play()
 		Anim:Stop()
@@ -1739,15 +1738,18 @@ ShotgunHUD.Activated:Connect(function()
 		Anim2:Play()
 		Anim:Stop()
 		id = GunIdle
-	elseif ability == false and GunHeld == true and mouse1 == false then
-		GunHeld = false
-		CanSprint = true
+		CanSprint = false
+		hum.WalkSpeed = 16
+	elseif ability == false and GunHeld == true and mouse1 == false and CanSprint == false then
 		hum.WalkSpeed = ws
+		GunHeld = false
 		Anim2:Stop()
 		Anim2 = AnimHandler.new(char, GunUnequip)
 		Anim2:Play()
 		Anim:Stop()
 		id = GunUnequip
+		wait(.5)
+		CanSprint = true
 	end
 end)
 
@@ -1870,7 +1872,7 @@ while wait() do
 			id = i
 		end
 	end
-	if walking == true and emote == false and ability == false and hurt == false and sprinting1 == false then
+	if walking == true and emote == false and ability == false and hurt == false then
 		if id ~= walk then
 			Anim:Stop()
 			emote = false
@@ -1891,7 +1893,7 @@ while wait() do
 		end
 	end
 
-	if hum.MoveDirection ~= Vector3.new(0, 0, 0) and sprinting1 == false then
+	if hum.MoveDirection ~= Vector3.new(0, 0, 0) and sprinting1 == false or CanSprint == false then
 		walking = true
 		sprinting = false
 		idle = false
