@@ -1098,7 +1098,7 @@ Empyrean = Start({
 	HideCharacter = Vector3.new(0, - 30, 0),
 	ParentCharacter = true,
 	PermanentDeath = true,
-	Refit = false,
+	Refit = true,
 	RigSize = 1,
 	RigTransparency = 1,
 	R15 = false,
@@ -1261,7 +1261,6 @@ end)
 
 uis.InputBegan:Connect(function(input)
 	if input.KeyCode == Enum.KeyCode.E and ability == false and GunHeld == false then
-		GunHeld = true
 		CanSprint = false
 		hum.WalkSpeed = 16
 		sprinting = false
@@ -1270,6 +1269,7 @@ uis.InputBegan:Connect(function(input)
 		Anim:Stop()
 		id = GunEquip
 		wait(0.8)
+		GunHeld = true
 		Anim2 = AnimHandler.new(char, GunIdle)
 		Anim2:Play()
 		Anim:Stop()
