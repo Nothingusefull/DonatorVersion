@@ -679,10 +679,28 @@ local PunchButton = Gui.MobileContainer.Punch
 PunchButton.Image = "rbxassetid://95580729656404"
 PunchButton.Clipping.Top.Image = "rbxassetid://95580729656404"
 PunchButton.AbilityName.Text = "Ritual"
-SprintButton:Destroy()
 -- Toggle Sprint
 SprintButton.Activated:Connect(function()
-
+	if sprinting1 == false then
+			sprinting1 = true
+			ws = 24
+			if ability == false and SpeedBoosted == false and stopped == false then
+				hum.WalkSpeed = 24
+			elseif ability == false and SpeedBoosted == true and stopped == false then
+				hum.WalkSpeed = 32
+		end
+	elseif sprinting1 == true then
+		
+	
+	
+			sprinting1 = false
+			ws = 8
+			if ability == false  and SpeedBoosted == false and stopped == false then
+				hum.WalkSpeed = 8
+			elseif ability == false and SpeedBoosted == true and stopped == false then
+				hum.WalkSpeed = 16
+		end
+	end
 end)
 
 -- Block
